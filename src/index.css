@@ -1,0 +1,252 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border font-sans;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+.bg-mdyafae {
+  background-color: #278a44;
+}
+
+.text-mdyafae {
+  color: #278a44;
+}
+
+.border-mdyafae {
+  border-color: #278a44;
+}
+
+.bg-mdyafae-gold {
+  background-color: #c8b568;
+}
+
+.text-mdyafae-gold {
+  color: #c8b568;
+}
+
+.border-mdyafae-gold {
+  border-color: #c8b568;
+}
+
+.bg-mdyafae-dark {
+  background-color: #1e6933;
+}
+
+.text-mdyafae-dark {
+  color: #1e6933;
+}
+
+.border-mdyafae-dark {
+  border-color: #1e6933;
+}
+
+.hover\:bg-mdyafae-dark:hover {
+  background-color: #1e6933;
+}
+
+.hover\:text-mdyafae-dark:hover {
+  color: #1e6933;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.icon-wrapper {
+  @apply flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-mdyafae-gold/20 transition-colors duration-300;
+}
+
+.icon-wrapper-sm {
+  @apply flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-mdyafae-gold/20 transition-colors duration-300;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-mdyafae to-mdyafae-gold;
+}
+
+.hover-lift {
+  @apply transform transition-transform duration-300 hover:-translate-y-1;
+}
+
+.icon-spin {
+  @apply transition-transform duration-300 hover:rotate-180;
+}
+
+/* تحسين عرض القائمة الجانبية */
+.rtl .lg\:ml-64 {
+  margin-left: 0;
+  margin-right: 16rem;
+}
+
+.ltr .lg\:ml-64 {
+  margin-left: 16rem;
+  margin-right: 0;
+}
+
+/* إضافة تأثير التلاشي للعناصر */
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* تحسين تحميل الصور */
+.blur-load {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px);
+  transition: filter 0.3s ease;
+}
+
+.blur-load.loaded {
+  filter: blur(0);
+}
+
+.blur-load img {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  width: 100%;
+  height: auto;
+}
+
+.blur-load.loaded img {
+  opacity: 1;
+}
+
+/* تحسينات للوضع العربي واللغة الإنجليزية */
+[dir="rtl"] .space-x-reverse > * {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x > * {
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * (1 - var(--tw-space-x-reverse)));
+}
+
+[dir="rtl"] .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* إضافة تأثيرات للروابط والأزرار */
+.link-hover {
+  @apply relative overflow-hidden;
+}
+
+.link-hover::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-mdyafae transition-all duration-300;
+}
+
+.link-hover:hover::after {
+  @apply w-full;
+}
+
+/* تحسين قابلية الاستجابة للهواتف المحمولة */
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+  
+  .h-screen {
+    height: calc(100vh - 60px);
+  }
+}

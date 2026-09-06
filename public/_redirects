@@ -1,0 +1,11 @@
+
+# توجيه كل الطلبات إلى الصفحة الرئيسية للتطبيق
+/* /index.html 200
+
+# توجيه طلبات الدومين القديم إلى الدومين الجديد
+https://olddomainname.com/* https://mdyaf.ae/:splat 301!
+https://mdyafae.lovable.app/* https://mdyaf.ae/:splat 301!
+https://mdyafae.com/* https://mdyaf.ae/:splat 301!
+https://www.mdyafae.com/* https://www.mdyaf.ae/:splat 301!
+
+# ضمان عمل الموقع من أي دومين

@@ -1,0 +1,393 @@
+
+import { useState, useEffect } from 'react';
+
+// Arabic translations
+export const arTranslations = {
+  // Hero section
+  heroTitle: "استمتع بتجربة ضيافة جديدة",
+  heroSubtitle: "خدمة توصيل الطعام والضيافة الراقية في جميع أنحاء دولة الإمارات العربية المتحدة",
+  orderNow: "اطلب الآن",
+  learnMore: "تعرف علينا",
+  clients: "+1000 عميل",
+  trustUs: "يثقون بنا يومياً",
+  contactHotline: "للتواصل معنا عبر الرقم الموحد:",
+  
+  // Features section
+  ourServices: "خدماتنا المميزة",
+  servicesDescription: "نقدم مجموعة متكاملة من خدمات الضيافة والتوصيل في جميع أنحاء دولة الإمارات",
+  fastDelivery: "توصيل سريع",
+  fastDeliveryDesc: "نصل إليك في أي مكان داخل الإمارات بأسرع وقت وأعلى جودة",
+  professionalTeam: "فريق محترف",
+  professionalTeamDesc: "فريق من المحترفين لتقديم أفضل خدمة ضيافة بمعايير عالمية",
+  eventOrganizing: "تنظيم المناسبات",
+  eventOrganizingDesc: "نتولى تنظيم جميع أنواع المناسبات والحفلات بكل احترافية",
+  diverseProducts: "منتجات متنوعة",
+  diverseProductsDesc: "نوفر تشكيلة واسعة من المنتجات والأطعمة الطازجة عالية الجودة",
+  hourService: "خدمة على مدار الساعة",
+  hourServiceDesc: "فريق الدعم متوفر دائماً لمساعدتك في أي وقت على مدار اليوم",
+  djService: "خدمة الديجي",
+  djServiceDesc: "ديجي محترف لإضفاء أجواء موسيقية مميزة على مناسباتك",
+  guaranteedQuality: "جودة مضمونة",
+  guaranteedQualityDesc: "نضمن تقديم أعلى معايير الجودة في جميع منتجاتنا وخدماتنا",
+  securityService: "حراسة أمنية",
+  securityServiceDesc: "خدمة توفير حراس أمن شخصيين محترفين ومدربين لحمايتك وضمان أمنك وأمن ممتلكاتك",
+  
+  // Order section
+  fastDeliveryTitle: "توصيل سريع",
+  orderWithEase: "اطلب بكل سهولة ومرونة واستلم أينما كنت",
+  appDescription: "تطبيق مضياف الإمارات يوفر لك تجربة طلب فريدة وسلسة. يمكنك طلب كل ما تحتاجه من خدمات الضيافة والطعام من خلال تطبيقنا السهل الاستخدام.",
+  deliveryAllUAE: "توصيل سريع في جميع أنحاء الإمارات",
+  trackOrder: "متابعة طلبك لحظة بلحظة",
+  multiplePayment: "خيارات دفع متعددة وآمنة",
+  support24: "دعم فني على مدار الساعة",
+  downloadApp: "حمل التطبيق الآن",
+  trackYourOrder: "تتبع طلبك",
+  
+  // Event section
+  planYourEvent: "خطط لمناسبتك",
+  makeEventsSpecial: "نجعل مناسباتك أكثر تميزاً",
+  eventServicesDesc: "نقدم خدمات متكاملة لتنظيم المناسبات والحفلات بجميع أنواعها في كافة أنحاء دولة الإمارات العربية المتحدة",
+  whyChooseUs: "لماذا تختار خدماتنا لتنظيم مناسباتك؟",
+  whyChooseUsDesc: "نمتلك خبرة واسعة في تنظيم المناسبات والحفلات بمختلف أنواعها وأحجامها. نلتزم بتقديم أعلى معايير الجودة والاحترافية لضمان رضا عملائنا.",
+  professionalChefs: "طهاة محترفون",
+  professionalChefsDesc: "نتعاون مع نخبة من الطهاة المحترفين لتقديم أشهى المأكولات",
+  comprehensivePlanning: "تخطيط شامل",
+  comprehensivePlanningDesc: "نتولى التخطيط لجميع تفاصيل المناسبة من الألف إلى الياء",
+  diverseMenu: "قائمة طعام متنوعة",
+  diverseMenuDesc: "نقدم خيارات متنوعة من الأطباق العالمية والمحلية",
+  fullServiceTeam: "فريق خدمة متكامل",
+  fullServiceTeamDesc: "فريق محترف لخدمة الضيوف وضمان راحتهم",
+  bookEventService: "احجز خدمة تنظيم مناسبة",
+  
+  // Event booking form
+  bookYourEvent: "احجز مناسبتك الآن",
+  makeItSpecial: "دعنا نجعل مناسبتك استثنائية",
+  fullName: "الاسم الكامل",
+  phoneNumber: "رقم الهاتف",
+  eventType: "نوع المناسبة",
+  numberOfGuests: "عدد الضيوف",
+  eventDate: "تاريخ المناسبة",
+  eventTime: "وقت المناسبة",
+  eventLocation: "موقع المناسبة",
+  additionalNotes: "ملاحظات إضافية",
+  contactOnWhatsapp: "تواصل معنا على واتساب",
+  bookingNotes: "* يرجى العلم أن قبول الطلب يعتمد على موافقة مقدم الخدمة وتوفر الخدمة في التاريخ المطلوب",
+  confirmationNote: "* لا يمكن تأكيد الحجز قبل 24 ساعة من موعد المناسبة أو الفعالية",
+  
+  // Footer
+  quickLinks: "روابط سريعة",
+  home: "الرئيسية",
+  aboutUs: "من نحن",
+  services: "خدماتنا",
+  contactUs: "تواصل معنا",
+  faq: "الأسئلة الشائعة",
+  privacyPolicy: "سياسة الخصوصية",
+  ourServicesFooter: "خدماتنا",
+  foodDelivery: "توصيل الطعام",
+  eventPlanning: "تنظيم المناسبات",
+  hospitalityServices: "خدمات الضيافة",
+  corporateEvents: "مناسبات الشركات",
+  specialEvents: "المناسبات الخاصة",
+  weddingsAndParties: "الأعراس والحفلات",
+  contactInfo: "تواصل معنا",
+  dubai: "دبي، الإمارات العربية المتحدة",
+  workingHours: "ساعات العمل",
+  allWeek: "جميع أيام الأسبوع، 24 ساعة",
+  downloadAppFooter: "حمل التطبيق",
+  rights: "جميع الحقوق محفوظة لـ شركة مضياف العربية ذ.م.م (الأمارات - السعودية)",
+  
+  // About page
+  aboutMDYAF: "تعرف على مضياف الإمارات",
+  aboutDescription: "نحن شركة رائدة في مجال الضيافة وتوصيل الطعام وتنظيم المناسبات في دولة الإمارات العربية المتحدة. نسعى لتقديم خدمات متميزة بأعلى معايير الجودة لإرضاء عملائنا.",
+  ourStory: "قصتنا",
+  ourStoryDesc1: "تأسست مضياف الإمارات بهدف تقديم خدمات ضيافة متميزة تعكس الكرم والأصالة الإماراتية. منذ بداياتنا، كان هدفنا هو إحداث تغيير إيجابي في تجربة الضيافة وتقديم الطعام وتنظيم المناسبات في دولة الإمارات.",
+  ourStoryDesc2: "نفتخر بفريقنا المحترف المكون من خبراء في مجال الضيافة والطهي وتنظيم الفعاليات، حيث يعملون بشغف لتقديم خدمات تفوق توقعات عملائنا.",
+  ourStoryDesc3: "اليوم، أصبحت مضياف الإمارات علامة رائدة في مجال الضيافة، ونستمر في التوسع لتغطية جميع إمارات الدولة مع الحفاظ على مستوى الجودة العالي الذي نشتهر به.",
+  yearsOfExperience: "سنوات الخبرة",
+  clientsCount: "عميل", 
+  professionals: "موظف محترف",
+  emirates: "إمارات",
+  vision: "رؤيتنا",
+  visionDesc: "أن نكون الاختيار الأول في مجال خدمات الضيافة وتوصيل الطعام وتنظيم المناسبات في دولة الإمارات العربية المتحدة، وأن نقدم تجربة استثنائية تجمع بين الأصالة الإماراتية والمعايير العالمية.",
+  mission: "رسالتنا",
+  missionDesc: "تقديم خدمات ضيافة متميزة تعكس الكرم والضيافة الإماراتية الأصيلة، باستخدام أفضل المنتجات والمكونات وبأيدي فريق محترف، مع التركيز على الجودة والاهتمام بأدق التفاصيل لضمان تجربة لا تُنسى لعملائنا.",
+  values: "قيمنا",
+  quality: "الجودة",
+  qualityDesc: "نلتزم بتقديم أعلى معايير الجودة في جميع خدماتنا ومنتجاتنا",
+  innovation: "الابتكار",
+  innovationDesc: "نسعى دائماً لتقديم حلول مبتكرة وتجارب فريدة لعملائنا",
+  integrity: "النزاهة",
+  integrityDesc: "نعمل بأمانة وشفافية في جميع تعاملاتنا مع العملاء والموردين",
+  perfection: "الإتقان",
+  perfectionDesc: "نهتم بأدق التفاصيل لضمان تجربة متكاملة ومتميزة",
+  collaboration: "التعاون",
+  collaborationDesc: "نؤمن بأهمية العمل الجماعي والتعاون لتحقيق أفضل النتائج",
+  responsibility: "المسؤولية",
+  responsibilityDesc: "نلتزم بمسؤوليتنا تجاه عملائنا ومجتمعنا والبيئة",
+  
+  // Contact page
+  hereToHelp: "نحن هنا لمساعدتك",
+  contactDescription: "يسعدنا التواصل معك والإجابة على جميع استفساراتك. يمكنك الاتصال بنا مباشرة أو إرسال رسالة وسنقوم بالرد عليك في أقرب وقت ممكن.",
+  callUs: "اتصل بنا",
+  emailUs: "راسلنا",
+  workingHoursContact: "ساعات العمل",
+  sendMessage: "أرسل لنا رسالة",
+  name: "الاسم",
+  enterName: "أدخل اسمك",
+  email: "البريد الإلكتروني",
+  enterEmail: "أدخل بريدك الإلكتروني",
+  phone: "رقم الهاتف",
+  enterPhone: "أدخل رقم هاتفك",
+  subject: "الموضوع",
+  messageSubject: "موضوع الرسالة",
+  message: "الرسالة",
+  writeMessage: "اكتب رسالتك هنا...",
+  sending: "جاري الإرسال...",
+  sendMessageButton: "إرسال الرسالة",
+  messageSent: "تم إرسال رسالتك بنجاح!",
+  messageResponse: "سنقوم بالرد عليك في أقرب وقت ممكن. شكراً لتواصلك معنا.",
+  location: "موقعنا",
+  branches: "فروعنا",
+  
+  // Services page
+  bestServices: "أفضل الخدمات في الإمارات",
+  servicesPageDesc: "نقدم مجموعة متكاملة من خدمات الضيافة والتنظيم على أعلى مستوى من الجودة والاحترافية",
+  foodCatering: "تقديم الطعام",
+  foodCateringDesc: "نقدم تشكيلة واسعة من الأطباق المحلية والعالمية المعدة بأيدي طهاة محترفين",
+  luxuryChocolate: "الشوكولاتة الفاخرة",
+  luxuryChocolateDesc: "تشكيلة مميزة من الشوكولاتة الفاخرة والحلويات المناسبة لجميع المناسبات",
+  specialOccasions: "المناسبات الخاصة",
+  specialOccasionsDesc: "تنظيم كامل للمناسبات الخاصة والاحتفالات العائلية بكل احترافية",
+  weddings: "الأعراس",
+  weddingsDesc: "خدمات متكاملة لتنظيم حفلات الزفاف والخطوبة من التخطيط حتى التنفيذ",
+  corporateEventsService: "مناسبات الشركات",
+  corporateEventsDesc: "تنظيم المؤتمرات والمناسبات الخاصة بالشركات بمعايير احترافية",
+  foodDeliveryService: "توصيل الطعام",
+  foodDeliveryDesc: "خدمة توصيل سريعة وموثوقة لجميع طلبات الطعام في أنحاء الإمارات",
+  audioVisual: "خدمات الصوت والإضاءة",
+  audioVisualDesc: "أحدث تقنيات الصوت والإضاءة لإضفاء أجواء مميزة على مناسباتك",
+  djServices: "خدمات الديجي",
+  djServicesDesc: "ديجي محترف لتقديم أفضل الأجواء الموسيقية المناسبة لحفلك",
+
+  // كلمات مخصصة جديدة للقائمة المخصصة وتذييل الصفحة
+  about: "من نحن",
+  contact: "تواصل معنا",
+  blog: "المدونة",
+  hospitality: "الضيافة",
+  events: "المناسبات",
+  catering: "تموين الحفلات",
+  corporateServices: "خدمات الشركات",
+  address: "دبي، الإمارات العربية المتحدة - شارع الشيخ زايد",
+  rightsReserved: "جميع الحقوق محفوظة",
+  termsConditions: "الشروط والأحكام",
+  searchPlaceholder: "ابحث هنا..."
+};
+
+// English translations
+export const enTranslations = {
+  // Hero section
+  heroTitle: "Enjoy a New Hospitality Experience",
+  heroSubtitle: "Premium food delivery and hospitality service across the United Arab Emirates",
+  orderNow: "Order Now",
+  learnMore: "Learn More",
+  clients: "+1000 Clients",
+  trustUs: "Trust us daily",
+  contactHotline: "Contact us via our hotline:",
+  
+  // Features section
+  ourServices: "Our Premium Services",
+  servicesDescription: "We provide a comprehensive range of hospitality and delivery services throughout the United Arab Emirates",
+  fastDelivery: "Fast Delivery",
+  fastDeliveryDesc: "We reach you anywhere in the UAE with the fastest time and highest quality",
+  professionalTeam: "Professional Team",
+  professionalTeamDesc: "A team of professionals to provide the best hospitality service with international standards",
+  eventOrganizing: "Event Organization",
+  eventOrganizingDesc: "We organize all types of events and parties with complete professionalism",
+  diverseProducts: "Diverse Products",
+  diverseProductsDesc: "We provide a wide variety of high-quality fresh products and foods",
+  hourService: "24/7 Service",
+  hourServiceDesc: "Support team is always available to help you at any time throughout the day",
+  djService: "DJ Service",
+  djServiceDesc: "Professional DJ to create a distinctive musical atmosphere for your events",
+  guaranteedQuality: "Guaranteed Quality",
+  guaranteedQualityDesc: "We ensure the highest quality standards in all our products and services",
+  securityService: "Security Guards",
+  securityServiceDesc: "Professional and trained personal security guards service to protect you and ensure your safety and property security",
+  
+  // Order section
+  fastDeliveryTitle: "Fast Delivery",
+  orderWithEase: "Order with ease and flexibility and receive wherever you are",
+  appDescription: "MDYAF UAE app provides you with a unique and smooth ordering experience. You can order everything you need from hospitality and food services through our easy-to-use application.",
+  deliveryAllUAE: "Fast delivery throughout the UAE",
+  trackOrder: "Track your order in real-time",
+  multiplePayment: "Multiple and secure payment options",
+  support24: "24/7 technical support",
+  downloadApp: "Download the App Now",
+  trackYourOrder: "Track Your Order",
+  
+  // Event section
+  planYourEvent: "Plan Your Event",
+  makeEventsSpecial: "We make your events more special",
+  eventServicesDesc: "We provide integrated services for organizing events and parties of all kinds throughout the United Arab Emirates",
+  whyChooseUs: "Why choose our services for your events?",
+  whyChooseUsDesc: "We have extensive experience in organizing events and parties of various types and sizes. We are committed to providing the highest standards of quality and professionalism to ensure the satisfaction of our customers.",
+  professionalChefs: "Professional Chefs",
+  professionalChefsDesc: "We collaborate with elite professional chefs to serve the most delicious cuisine",
+  comprehensivePlanning: "Comprehensive Planning",
+  comprehensivePlanningDesc: "We handle planning for all event details from A to Z",
+  diverseMenu: "Diverse Menu",
+  diverseMenuDesc: "We offer a variety of international and local dishes",
+  fullServiceTeam: "Full Service Team",
+  fullServiceTeamDesc: "Professional team to serve guests and ensure their comfort",
+  bookEventService: "Book Event Service",
+  
+  // Event booking form
+  bookYourEvent: "Book Your Event Now",
+  makeItSpecial: "Let us make your event exceptional",
+  fullName: "Full Name",
+  phoneNumber: "Phone Number",
+  eventType: "Event Type",
+  numberOfGuests: "Number of Guests",
+  eventDate: "Event Date",
+  eventTime: "Event Time",
+  eventLocation: "Event Location",
+  additionalNotes: "Additional Notes",
+  contactOnWhatsapp: "Contact us on WhatsApp",
+  bookingNotes: "* Please note that acceptance of the request depends on the service provider's approval and the availability of the service on the requested date",
+  confirmationNote: "* Booking cannot be confirmed before 24 hours from the event or occasion date",
+  
+  // Footer
+  quickLinks: "Quick Links",
+  home: "Home",
+  aboutUs: "About Us",
+  services: "Our Services",
+  contactUs: "Contact Us",
+  faq: "FAQ",
+  privacyPolicy: "Privacy Policy",
+  ourServicesFooter: "Our Services",
+  foodDelivery: "Food Delivery",
+  eventPlanning: "Event Planning",
+  hospitalityServices: "Hospitality Services",
+  corporateEvents: "Corporate Events",
+  specialEvents: "Special Events",
+  weddingsAndParties: "Weddings & Parties",
+  contactInfo: "Contact Us",
+  dubai: "Dubai, United Arab Emirates",
+  workingHours: "Working Hours",
+  allWeek: "All week, 24 hours",
+  downloadAppFooter: "Download the App",
+  rights: "All rights reserved to MDYAF Arabia LLC (UAE - Saudi Arabia)",
+  
+  // About page
+  aboutMDYAF: "About MDYAF UAE",
+  aboutDescription: "We are a leading company in hospitality, food delivery, and event organization in the United Arab Emirates. We strive to provide distinguished services with the highest quality standards to satisfy our customers.",
+  ourStory: "Our Story",
+  ourStoryDesc1: "MDYAF UAE was established with the aim of providing distinguished hospitality services that reflect Emirati generosity and authenticity. Since our beginnings, our goal has been to make a positive change in the experience of hospitality, food service, and event organization in the UAE.",
+  ourStoryDesc2: "We are proud of our professional team consisting of experts in hospitality, cooking, and event organization, who work passionately to provide services that exceed our customers' expectations.",
+  ourStoryDesc3: "Today, MDYAF UAE has become a leading brand in the hospitality sector, and we continue to expand to cover all the emirates of the country while maintaining the high level of quality we are known for.",
+  yearsOfExperience: "Years of Experience",
+  clientsCount: "Client",
+  professionals: "Professional Staff",
+  emirates: "Emirates",
+  vision: "Our Vision",
+  visionDesc: "To be the first choice in hospitality services, food delivery, and event organization in the United Arab Emirates, and to provide an exceptional experience that combines Emirati authenticity with international standards.",
+  mission: "Our Mission",
+  missionDesc: "To provide distinguished hospitality services that reflect the generosity and authentic Emirati hospitality, using the best products and ingredients and by a professional team, with a focus on quality and attention to the finest details to ensure an unforgettable experience for our customers.",
+  values: "Our Values",
+  quality: "Quality",
+  qualityDesc: "We are committed to providing the highest quality standards in all our services and products",
+  innovation: "Innovation",
+  innovationDesc: "We always seek to provide innovative solutions and unique experiences for our customers",
+  integrity: "Integrity",
+  integrityDesc: "We work with honesty and transparency in all our dealings with customers and suppliers",
+  perfection: "Perfection",
+  perfectionDesc: "We pay attention to the finest details to ensure an integrated and distinguished experience",
+  collaboration: "Collaboration",
+  collaborationDesc: "We believe in the importance of teamwork and cooperation to achieve the best results",
+  responsibility: "Responsibility",
+  responsibilityDesc: "We are committed to our responsibility towards our customers, our community, and the environment",
+  
+  // Contact page
+  hereToHelp: "We're Here to Help",
+  contactDescription: "We are happy to communicate with you and answer all your inquiries. You can contact us directly or send a message and we will respond to you as soon as possible.",
+  callUs: "Call Us",
+  emailUs: "Email Us",
+  workingHoursContact: "Working Hours",
+  sendMessage: "Send Us a Message",
+  name: "Name",
+  enterName: "Enter your name",
+  email: "Email",
+  enterEmail: "Enter your email",
+  phone: "Phone",
+  enterPhone: "Enter your phone number",
+  subject: "Subject",
+  messageSubject: "Message subject",
+  message: "Message",
+  writeMessage: "Write your message here...",
+  sending: "Sending...",
+  sendMessageButton: "Send Message",
+  messageSent: "Your message has been sent successfully!",
+  messageResponse: "We will respond to you as soon as possible. Thank you for contacting us.",
+  location: "Our Location",
+  branches: "Our Branches",
+  
+  // Services page
+  bestServices: "Best Services in the UAE",
+  servicesPageDesc: "We provide a comprehensive range of hospitality and organization services with the highest levels of quality and professionalism",
+  foodCatering: "Food Catering",
+  foodCateringDesc: "We offer a wide variety of local and international dishes prepared by professional chefs",
+  luxuryChocolate: "Luxury Chocolate",
+  luxuryChocolateDesc: "A distinctive collection of luxury chocolates and sweets suitable for all occasions",
+  specialOccasions: "Special Occasions",
+  specialOccasionsDesc: "Complete organization of special occasions and family celebrations with professionalism",
+  weddings: "Weddings",
+  weddingsDesc: "Comprehensive services for organizing wedding and engagement parties from planning to execution",
+  corporateEventsService: "Corporate Events",
+  corporateEventsDesc: "Organizing conferences and corporate events with professional standards",
+  foodDeliveryService: "Food Delivery",
+  foodDeliveryDesc: "Fast and reliable delivery service for all food orders throughout the UAE",
+  audioVisual: "Audio & Lighting Services",
+  audioVisualDesc: "Latest audio and lighting technologies to create a distinctive atmosphere for your events",
+  djServices: "DJ Services",
+  djServicesDesc: "Professional DJ to provide the best musical atmosphere suitable for your party",
+
+  // كلمات مخصصة جديدة للقائمة المخصصة وتذييل الصفحة باللغة الإنجليزية
+  about: "About Us",
+  contact: "Contact Us",
+  blog: "Blog",
+  hospitality: "Hospitality",
+  events: "Events",
+  catering: "Catering",
+  corporateServices: "Corporate Services",
+  address: "Dubai, United Arab Emirates - Sheikh Zayed Road",
+  rightsReserved: "All Rights Reserved",
+  termsConditions: "Terms & Conditions",
+  searchPlaceholder: "Search here..."
+};
+
+// Translation hook
+export const useTranslation = () => {
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('language') || 'ar';
+  });
+
+  useEffect(() => {
+    const handleLanguageChange = (event: any) => {
+      setLanguage(event.detail);
+    };
+
+    window.addEventListener('languageChange', handleLanguageChange);
+    return () => {
+      window.removeEventListener('languageChange', handleLanguageChange);
+    };
+  }, []);
+
+  const t = (key: keyof typeof arTranslations) => {
+    if (language === 'ar') {
+      return arTranslations[key];
+    }
+    return enTranslations[key];
+  };
+
+  return { t, language };
+};
