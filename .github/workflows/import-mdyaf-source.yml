@@ -1,0 +1,37 @@
+name: Import Mdyaf source
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/import-mdyaf-source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+
+      - name: Download prepared Mdyaf source snapshot
+        run: |
+          curl -L --fail --retry 3 'https://sdmntprukwest.oaiusercontent.com/files/00000000-3550-8243-9695-5c16b306ca65/raw?se=2026-09-06T05%3A18%3A06Z&sp=r&sv=2026-02-06&sr=b&scid=e16ec3c0-8a77-520d-9f24-7e6bcc4b0a43&skoid=e32cbaad-a1eb-4299-9f16-1b364ab43781&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-06T04%3A29%3A08Z&ske=2026-09-07T04%3A29%3A08Z&sks=b&skv=2026-02-06&sig=UscFgKrtlzUkh3JZhFOoJbrHqTLVrtcolkho5CRy2E4%3D' -o /tmp/mdyaf-source.zip
+
+      - name: Replace repository contents with independent source
+        run: |
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          unzip -q /tmp/mdyaf-source.zip -d .
+          rm -rf .github/workflows/import-mdyaf-source.yml
+
+      - name: Commit imported source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'chore: import independent Mdyaf Saudi source' || exit 0
+          git push origin main
