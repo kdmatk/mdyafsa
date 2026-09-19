@@ -1,209 +1,48 @@
-import { useState, useEffect } from 'react';
-import AdminDashboardLayout from '@/components/AdminDashboardLayout';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, Calendar, Users, ShoppingCart, ChevronRight, ChevronLeft } from 'lucide-react';
-import { initialServices } from '@/data/initialServices';
+import { Badge } from '@/components/ui/badge';
+import { BriefcaseBusiness, Building2, Headphones, ShoppingBag, AlertTriangle, ArrowLeft, Activity } from 'lucide-react';
 
-const AdminDashboard = () => {
-  const [language, setLanguage] = useState('ar');
-  const [bookingsPage, setBookingsPage] = useState(1);
-  const [bookingsPerPage] = useState(5);
+type Stats={projects:number;clients:number;tickets:number;orders:number;urgent:number};
+type Ticket={id:string;subject:string;status:string;priority:string;name:string;created_at:string};
 
-  useEffect(() => {
-    const handleLanguageChange = (event: CustomEvent) => {
-      setLanguage(event.detail);
-    };
-
-    window.addEventListener('languageChange', handleLanguageChange as EventListener);
-    return () => {
-      window.removeEventListener('languageChange', handleLanguageChange as EventListener);
-    };
-  }, []);
-
-  const generateFakeBookings = () => {
-    const bookings = [];
-    for (let i = 0; i < 100; i++) {
-      const hoursAgo = Math.floor(Math.random() * 72) + 1;
-      bookings.push({
-        id: 1000 + i,
-        hoursAgo,
-        status: Math.random() > 0.3 ? 'new' : 'processing',
-      });
-    }
-    return bookings.sort((a, b) => a.hoursAgo - b.hoursAgo);
-  };
-
-  const allBookings = generateFakeBookings();
-
-  const indexOfLastBooking = bookingsPage * bookingsPerPage;
-  const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
-  const currentBookings = allBookings.slice(indexOfFirstBooking, indexOfLastBooking);
-
-  const generateServiceStats = () => {
-    return initialServices.map(service => {
-      const percentage = Math.floor(Math.random() * 35) + 5;
-      return {
-        name_ar: service.title_ar,
-        name_en: service.title_en,
-        percentage
-      };
-    })
-    .sort((a, b) => b.percentage - a.percentage)
-    .slice(0, 6);
-  };
-
-  const serviceStats = generateServiceStats();
-
-  const getStats = () => {
-    if (language === 'ar') {
-      return [
-        { title: 'إجمالي الخدمات', value: initialServices.length.toString(), icon: <Package className="h-8 w-8 text-mdyafae" />, color: 'bg-blue-50' },
-        { title: 'الحجوزات الجديدة', value: allBookings.filter(b => b.status === 'new').length.toString(), icon: <Calendar className="h-8 w-8 text-mdyafae" />, color: 'bg-amber-50' },
-        { title: 'المستخدمين النشطين', value: '153', icon: <Users className="h-8 w-8 text-mdyafae" />, color: 'bg-green-50' },
-        { title: 'الطلبات اليومية', value: allBookings.filter(b => b.hoursAgo <= 24).length.toString(), icon: <ShoppingCart className="h-8 w-8 text-mdyafae" />, color: 'bg-purple-50' },
-      ];
-    } else {
-      return [
-        { title: 'Total Services', value: initialServices.length.toString(), icon: <Package className="h-8 w-8 text-mdyafae" />, color: 'bg-blue-50' },
-        { title: 'New Bookings', value: allBookings.filter(b => b.status === 'new').length.toString(), icon: <Calendar className="h-8 w-8 text-mdyafae" />, color: 'bg-amber-50' },
-        { title: 'Active Users', value: '153', icon: <Users className="h-8 w-8 text-mdyafae" />, color: 'bg-green-50' },
-        { title: 'Daily Orders', value: allBookings.filter(b => b.hoursAgo <= 24).length.toString(), icon: <ShoppingCart className="h-8 w-8 text-mdyafae" />, color: 'bg-purple-50' },
-      ];
-    }
-  };
-
-  const stats = getStats();
-
-  const handleNextPage = () => {
-    if (bookingsPage < Math.ceil(allBookings.length / bookingsPerPage)) {
-      setBookingsPage(bookingsPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (bookingsPage > 1) {
-      setBookingsPage(bookingsPage - 1);
-    }
-  };
-
-  return (
-    <AdminDashboardLayout>
-      <div className={`mb-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-        <h1 className="text-3xl font-bold text-mdyafae">
-          {language === 'ar' ? 'لوحة التحكم' : 'Dashboard'}
-        </h1>
-        <p className="text-gray-600 mt-1">
-          {language === 'ar' 
-            ? 'مرحبًا بك في لوحة تحكم مضياف الإمارات' 
-            : 'Welcome to Mdyafae Emirates Admin Dashboard'}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
-          <Card key={index} className="shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader className={`flex flex-row items-center justify-between pb-2 ${stat.color} rounded-t-lg`}>
-              <CardTitle className="text-lg font-medium text-gray-700">
-                {stat.title}
-              </CardTitle>
-              {stat.icon}
-            </CardHeader>
-            <CardContent className="pt-6">
-              <p className="text-3xl font-bold">{stat.value}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="shadow-md">
-          <CardHeader className="flex justify-between items-center">
-            <CardTitle className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-              {language === 'ar' ? 'الحجوزات الأخيرة' : 'Recent Bookings'}
-            </CardTitle>
-            <div className="flex items-center gap-2">
-              <button 
-                onClick={handlePrevPage}
-                disabled={bookingsPage === 1}
-                className="p-1 rounded-full bg-gray-100 disabled:opacity-50"
-              >
-                {language === 'ar' ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-              </button>
-              <span className="text-sm text-gray-500">
-                {bookingsPage} / {Math.ceil(allBookings.length / bookingsPerPage)}
-              </span>
-              <button 
-                onClick={handleNextPage}
-                disabled={bookingsPage === Math.ceil(allBookings.length / bookingsPerPage)}
-                className="p-1 rounded-full bg-gray-100 disabled:opacity-50"
-              >
-                {language === 'ar' ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
-              </button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {currentBookings.map((booking, index) => (
-                <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <div className={`flex-1 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-                    <p className="font-medium">
-                      {language === 'ar' 
-                        ? `حجز مناسبة #${booking.id}` 
-                        : `Event Booking #${booking.id}`}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {language === 'ar' 
-                        ? `قبل ${booking.hoursAgo} ${booking.hoursAgo === 1 ? 'ساعة' : 'ساعات'}` 
-                        : `${booking.hoursAgo} hour${booking.hoursAgo > 1 ? 's' : ''} ago`}
-                    </p>
-                  </div>
-                  <div className={`flex items-center ${language === 'ar' ? 'mr-4' : 'ml-4'}`}>
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      booking.status === 'new' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-amber-100 text-amber-800'
-                    }`}>
-                      {language === 'ar' 
-                        ? (booking.status === 'new' ? 'جديد' : 'قيد المعالجة') 
-                        : (booking.status === 'new' ? 'New' : 'Processing')}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-md">
-          <CardHeader>
-            <CardTitle className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-              {language === 'ar' ? 'الخدمات الأكثر طلبًا' : 'Most Requested Services'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {serviceStats.map((service, index) => (
-                <div key={index} className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-                  <div className="flex justify-between mb-1">
-                    <span className="font-medium">
-                      {language === 'ar' ? service.name_ar : service.name_en}
-                    </span>
-                    <span>{service.percentage}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-mdyafae h-2 rounded-full" 
-                      style={{ width: `${service.percentage}%` }} 
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </AdminDashboardLayout>
-  );
-};
-
-export default AdminDashboard;
+export default function AdminDashboard(){
+ const [stats,setStats]=useState<Stats>({projects:0,clients:0,tickets:0,orders:0,urgent:0});
+ const [tickets,setTickets]=useState<Ticket[]>([]);
+ const [projects,setProjects]=useState<any[]>([]);
+ const [loading,setLoading]=useState(true);
+ useEffect(()=>{(async()=>{
+  const [p,c,t,o,rt,rp]=await Promise.all([
+   supabase.from('tech_projects').select('*',{count:'exact',head:true}),
+   supabase.from('clients').select('*',{count:'exact',head:true}),
+   supabase.from('support_tickets').select('*',{count:'exact',head:true}).in('status',['open','in_progress']),
+   supabase.from('service_orders').select('*',{count:'exact',head:true}).in('status',['new','quoted','approved','in_progress']),
+   supabase.from('support_tickets').select('id,subject,status,priority,name,created_at').order('created_at',{ascending:false}).limit(6),
+   supabase.from('tech_projects').select('id,name,status,priority,progress,due_date').order('updated_at',{ascending:false}).limit(6)
+  ]);
+  const urgent=(rt.data||[]).filter((x:any)=>x.priority==='critical'||x.priority==='high').length;
+  setStats({projects:p.count||0,clients:c.count||0,tickets:t.count||0,orders:o.count||0,urgent});
+  setTickets((rt.data||[]) as Ticket[]); setProjects(rp.data||[]); setLoading(false);
+ })()},[]);
+ const cards=[
+  {title:'المشاريع التقنية',value:stats.projects,icon:BriefcaseBusiness,to:'/mdyafae/projects',hint:'إدارة التطوير والتسليم'},
+  {title:'العملاء',value:stats.clients,icon:Building2,to:'/mdyafae/clients',hint:'ملفات العملاء والمتابعة'},
+  {title:'التذاكر المفتوحة',value:stats.tickets,icon:Headphones,to:'/mdyafae/tickets',hint:'الدعم الفني والتقني'},
+  {title:'الطلبات النشطة',value:stats.orders,icon:ShoppingBag,to:'/mdyafae/orders',hint:'طلبات الخدمات والتنفيذ'},
+ ];
+ const label=(s:string)=>({planning:'تخطيط',design:'تصميم',development:'تطوير',testing:'اختبار',live:'منشور',maintenance:'صيانة',paused:'متوقف',open:'مفتوحة',in_progress:'قيد المعالجة',resolved:'تم الحل',closed:'مغلقة'} as any)[s]||s;
+ return <div className="space-y-7" dir="rtl">
+  <div className="rounded-2xl bg-slate-950 text-white p-6 md:p-8 overflow-hidden relative">
+   <div className="absolute -left-16 -top-16 w-56 h-56 rounded-full bg-white/5"/>
+   <div className="relative"><div className="flex items-center gap-2 text-slate-300 text-sm mb-2"><Activity size={16}/> مركز عمليات مضياف التقنية</div><h1 className="text-2xl md:text-3xl font-bold">إدارة الشركة من لوحة واحدة</h1><p className="text-slate-300 mt-2 max-w-2xl">تابع المشاريع والعملاء وطلبات الخدمات وتذاكر الدعم الفني، مع رؤية تشغيلية واضحة لحالة العمل.</p></div>
+  </div>
+  {stats.urgent>0&&<div className="border border-amber-200 bg-amber-50 rounded-xl p-4 flex items-center gap-3"><AlertTriangle className="text-amber-600"/><div><b>{stats.urgent} تذكرة بأولوية مرتفعة</b><p className="text-sm text-amber-800">تحتاج إلى مراجعة سريعة من فريق الدعم.</p></div></div>}
+  <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">{cards.map(x=><Link to={x.to} key={x.to}><Card className="h-full hover:shadow-md transition-all hover:-translate-y-0.5"><CardContent className="p-5"><div className="flex justify-between items-start"><div className="p-2.5 rounded-xl bg-slate-100"><x.icon size={22} className="text-slate-800"/></div><ArrowLeft size={18} className="text-slate-400"/></div><div className="text-3xl font-bold mt-5">{loading?'—':x.value}</div><div className="font-semibold mt-1">{x.title}</div><div className="text-xs text-slate-500 mt-1">{x.hint}</div></CardContent></Card></Link>)}</div>
+  <div className="grid xl:grid-cols-2 gap-5">
+   <Card><CardHeader className="flex flex-row items-center justify-between"><CardTitle>المشاريع الأخيرة</CardTitle><Link className="text-sm text-slate-600" to="/mdyafae/projects">عرض الكل</Link></CardHeader><CardContent className="space-y-4">{projects.length===0?<p className="text-slate-500 py-8 text-center">أضف أول مشروع تقني لبدء المتابعة.</p>:projects.map(p=><div key={p.id} className="border-b last:border-0 pb-4 last:pb-0"><div className="flex justify-between gap-3"><div><div className="font-semibold">{p.name}</div><div className="text-xs text-slate-500 mt-1">{label(p.status)} • {p.priority}</div></div><b>{p.progress||0}%</b></div><div className="h-2 bg-slate-100 rounded-full mt-3"><div className="h-2 bg-slate-900 rounded-full" style={{width:`${p.progress||0}%`}}/></div></div>)}</CardContent></Card>
+   <Card><CardHeader className="flex flex-row items-center justify-between"><CardTitle>آخر تذاكر الدعم</CardTitle><Link className="text-sm text-slate-600" to="/mdyafae/tickets">عرض الكل</Link></CardHeader><CardContent className="space-y-3">{tickets.length===0?<p className="text-slate-500 py-8 text-center">لا توجد تذاكر دعم حاليًا.</p>:tickets.map(t=><div key={t.id} className="p-3 rounded-xl bg-slate-50 flex items-center justify-between gap-3"><div className="min-w-0"><div className="font-medium truncate">{t.subject}</div><div className="text-xs text-slate-500 mt-1">{t.name}</div></div><div className="flex gap-2"><Badge variant="secondary">{label(t.status)}</Badge>{(t.priority==='high'||t.priority==='critical')&&<Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">عاجل</Badge>}</div></div>)}</CardContent></Card>
+  </div>
+ </div>
+}
