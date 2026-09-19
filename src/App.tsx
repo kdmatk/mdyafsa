@@ -64,7 +64,7 @@ const App = () => (
           </Route>
           
           {/* إعادة توجيه المسارات القديمة للمسارات الجديدة */}
-          <Route path="/admin" element={<Navigate to="/mdyafae" replace />} />
+          <Route path="/admin" element={<Navigate to="/mdyafae/dashboard" replace />} />
           <Route path="/admin-panel" element={<Navigate to="/mdyafae" replace />} />
           <Route path="/admin-panel/*" element={<Navigate to="/mdyafae" replace />} />
           
