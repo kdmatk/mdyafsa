@@ -22,6 +22,7 @@ import AdminHeroSlider from "./pages/AdminHeroSlider";
 import AdminClientLogos from "./pages/AdminClientLogos";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboardLayout from "./components/AdminDashboardLayout";
+import TechOperations from "./pages/TechOperations";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +56,11 @@ const App = () => (
             <Route path="/mdyafae/news-ticker" element={<AdminNewsTicker />} />
             <Route path="/mdyafae/hero-slider" element={<AdminHeroSlider />} />
             <Route path="/mdyafae/client-logos" element={<AdminClientLogos />} />
-            <Route path="/mdyafae/settings" element={<Navigate to="/mdyafae" replace />} />
+            <Route path="/mdyafae/projects" element={<TechOperations mode="projects" />} />
+            <Route path="/mdyafae/clients" element={<TechOperations mode="clients" />} />
+            <Route path="/mdyafae/tickets" element={<TechOperations mode="tickets" />} />
+            <Route path="/mdyafae/orders" element={<TechOperations mode="orders" />} />
+            <Route path="/mdyafae/settings" element={<Navigate to="/mdyafae/dashboard" replace />} />
           </Route>
           
           {/* إعادة توجيه المسارات القديمة للمسارات الجديدة */}
